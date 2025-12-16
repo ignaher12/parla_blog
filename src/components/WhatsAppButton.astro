@@ -28,6 +28,7 @@
                     ><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
                     ></path><circle cx="12" cy="7" r="4"></circle></svg
                 >
+                <span class="label-mobile">Andrea</span>
             </div>
         </a>
 
@@ -54,6 +55,7 @@
                     ><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
                     ></path><circle cx="12" cy="7" r="4"></circle></svg
                 >
+                <span class="label-mobile">Claudia</span>
             </div>
         </a>
     </div>
@@ -188,6 +190,9 @@
         opacity: 1;
         transform: translateX(0);
     }
+    .label-mobile {
+        display: none;
+    }
 
     /* Responsive */
     @media (max-width: 768px) {
@@ -196,10 +201,21 @@
             right: 20px;
         }
         .tooltip {
-            display: none; /* Often cleaner to hide labels on mobile hover, or show them always */
+            display: none;
         }
         .contact-option .label-mobile {
             /* If we wanted always-visible labels on mobile */
+        }
+        .label-mobile {
+            display: block;
+            position: absolute;
+            right: 60px;
+            color: white;
+            text-shadow: 2px 2px 0px #000;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            white-space: nowrap;
         }
     }
 </style>
