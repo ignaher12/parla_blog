@@ -1,8 +1,9 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
 ---
 
 <!doctype html>
@@ -12,38 +13,323 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	</head>
 	<body>
 		<Header />
+		<WhatsAppButton />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<div class="hero-container">
+				<img
+					src="/imgs/bg-img.jpg"
+					alt="Parla di Viaggi"
+					class="hero-bg"
+				/>
+				<div class="hero-content">
+					<h1>Parla di Viaggi</h1>
+					<p class="subtitle">Agencia de viajes.</p>
+					<div class="description">
+						<p>
+							Texto, Texto, Texto, Texto, Texto, Texto, Texto,
+							Texto, Texto, Texto, Texto, Texto, Texto, Texto,
+							Texto, Texto,
+						</p>
+						<p>
+							Texto, Texto, Texto, Texto, Texto, Texto, Texto,
+							Texto, Texto, Texto, Texto, Texto, Texto, Texto,
+							Texto, Texto,.
+						</p>
+						<p class="author">
+							Texto, Texto, Texto, Texto, Texto, Texto, Texto,
+							Texto, Texto, Texto, Texto, Texto, Texto, Texto,
+							Texto, Texto,
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="intro-grid">
+				<div class="intro-text">
+					<h2>Titulo</h2>
+					<p class="intro-highlight">Subtitulo</p>
+					<p>
+						Template text... aquí iría la descripción detallada de
+						tus servicios
+					</p>
+					<div class="cta-container">
+						<a href="#" class="cta-button">Descubre Más</a>
+					</div>
+				</div>
+				<div class="intro-image-container">
+					<div
+						class="placeholder-img"
+						style="background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666;"
+					>
+						<span>Template Image</span>
+					</div>
+				</div>
+			</div>
+			<div class="trips-section">
+				<h2 class="section-title">VIAJES GRUPALES</h2>
+				<div class="divider"></div>
+
+				<div class="trips-grid">
+					<!-- Card 1 -->
+					<div class="trip-card">
+						<div class="trip-img-placeholder">Image</div>
+						<h3>VIAJE 1</h3>
+						<p>01/01/26 - 01/01/26</p>
+					</div>
+					<!-- Card 2 -->
+					<div class="trip-card">
+						<div class="trip-img-placeholder">Image</div>
+						<h3>VIAJE 2</h3>
+						<p>01/01/26 - 01/01/26</p>
+					</div>
+					<!-- Card 3 -->
+					<div class="trip-card">
+						<div class="trip-img-placeholder">Image</div>
+						<h3>VIAJE 3</h3>
+						<p>01/01/26 - 01/01/26</p>
+					</div>
+					<!-- Card 4 -->
+					<div class="trip-card">
+						<div class="trip-img-placeholder">Image</div>
+						<h3>VIAJE 4</h3>
+						<p>01/01/26 - 01/01/26</p>
+					</div>
+				</div>
+			</div>
 		</main>
+
+		<style>
+			main {
+				width: 100%;
+				max-width: 100%;
+				padding: 0;
+			}
+			.hero-container {
+				position: relative;
+				width: 100%;
+				min-height: 600px;
+				overflow: hidden;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				text-align: center;
+				color: white;
+			}
+			.hero-bg {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				z-index: -1;
+				filter: brightness(0.4);
+			}
+			.hero-container::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(
+					0,
+					0,
+					0,
+					0.3
+				); /* Slight overlay for readability */
+				z-index: -1;
+			}
+			.hero-content {
+				z-index: 1;
+				padding: 20px;
+				max-width: 1200px;
+			}
+			h1 {
+				font-size: 4rem;
+				font-weight: 700;
+				text-transform: uppercase;
+				margin-bottom: 0.5rem;
+				line-height: 1.1;
+				font-family: system-ui, sans-serif;
+				color: white;
+				text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+			}
+			.subtitle {
+				font-size: 2rem;
+				font-family: serif;
+				font-style: italic;
+				margin-bottom: 2rem;
+				font-weight: 400;
+				text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+			}
+			.description p {
+				font-size: 1.3rem;
+				margin: 0.3rem 0;
+				font-family: serif;
+				font-style: italic;
+				text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+			}
+			.author {
+				margin-top: 1.5rem;
+				font-size: 1.1rem;
+				font-family: serif;
+				font-style: italic;
+			}
+
+			/* Intro Grid Styles */
+			.intro-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				max-width: 1200px;
+				margin: 4rem auto;
+				padding: 0 20px;
+				gap: 4rem;
+				align-items: center;
+			}
+			.intro-text h2 {
+				font-size: 2.5rem;
+				line-height: 1.2;
+				margin-bottom: 1.5rem;
+				color: #333;
+			}
+			.intro-highlight {
+				font-size: 1.5rem;
+				font-weight: 500;
+				color: #008080; /* Teal accent color */
+				margin-bottom: 1rem;
+				font-style: italic;
+				font-family: serif;
+			}
+			.intro-text p {
+				font-size: 1.1rem;
+				line-height: 1.6;
+				color: #555;
+				margin-bottom: 1rem;
+			}
+			.intro-image-container {
+				width: 100%;
+				height: 400px;
+				border-radius: 12px;
+				overflow: hidden;
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+			}
+			.placeholder-img {
+				width: 100%;
+				height: 100%;
+				font-size: 1.5rem;
+				font-weight: bold;
+			}
+			.cta-button {
+				display: inline-block;
+				margin-top: 1rem;
+				padding: 12px 30px;
+				background-color: #333;
+				color: white;
+				text-decoration: none;
+				border-radius: 50px;
+				font-weight: 600;
+				transition: all 0.3s ease;
+			}
+			.cta-button:hover {
+				background-color: #000;
+				transform: translateY(-2px);
+			}
+
+			@media (max-width: 768px) {
+				h1 {
+					font-size: 2.5rem;
+				}
+				.subtitle {
+					font-size: 1.5rem;
+				}
+				.description p {
+					font-size: 1.1rem;
+				}
+				.intro-grid {
+					grid-template-columns: 1fr;
+					gap: 2rem;
+					margin: 2rem auto;
+				}
+				.intro-text h2 {
+					font-size: 2rem;
+				}
+				.intro-image-container {
+					height: 300px;
+					order: -1; /* Image on top on mobile? Optional */
+				}
+			}
+
+			/* Trips Section Styles */
+			.trips-section {
+				max-width: 1200px;
+				margin: 5rem auto;
+				padding: 0 20px;
+				text-align: center;
+			}
+			.section-title {
+				font-size: 2rem;
+				color: #333;
+				margin-bottom: 1rem;
+				font-weight: 700;
+				font-family: system-ui, sans-serif;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+			}
+			.divider {
+				width: 100%;
+				height: 3px;
+				background-color: #0c0c0c; /* Teal accent */
+				margin: 0 auto 3rem auto;
+				max-width: 1000px; /* Optional: Keep it constrained or full width */
+			}
+			.trips-grid {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 2rem;
+			}
+			.trip-card {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 1rem;
+			}
+			.trip-img-placeholder {
+				width: 100%;
+				aspect-ratio: 1 / 1; /* Square images */
+				background-color: #e0e0e0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: #888;
+				font-weight: bold;
+				border-radius: 8px; /* Slight rounding for premium feel */
+				transition: transform 0.3s ease;
+				cursor: pointer;
+			}
+			.trip-img-placeholder:hover {
+				transform: scale(1.03);
+			}
+			.trip-card h3 {
+				font-size: 1.2rem;
+				color: #003366; /* Dark blue specific to the reference image text maybe? Or keep standard #333 */
+				color: #333;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+			}
+
+			@media (max-width: 1024px) {
+				.trips-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+			@media (max-width: 600px) {
+				.trips-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
 		<Footer />
 	</body>
 </html>
