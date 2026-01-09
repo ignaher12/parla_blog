@@ -7,7 +7,7 @@ import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
 
-type Props = CollectionEntry<"blog">["data"];
+type Props = CollectionEntry<"travel">["data"];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
@@ -29,6 +29,8 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				margin: 0 auto;
 				border-radius: 12px;
 				box-shadow: var(--box-shadow);
+				max-height: 400px;
+				object-fit: cover;
 			}
 			.prose {
 				width: 720px;
