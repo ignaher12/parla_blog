@@ -1,8 +1,9 @@
 ---
-title: 'Cruce Andino: La Gran Aventura de Bariloche a Chile'
-description: 'Unite a nuestra exclusiva salida del 28 de febrero. Naturaleza, navegación y shopping en un solo viaje.'
-pubDate: 'Feb 28 2026'
-heroImage: '../../assets/blog-cruce-andino-agencia.jpg'
+title: "[AGOTADO!] Cruce Andino: La Gran Aventura de Bariloche a Chile "
+description: Unite a nuestra exclusiva salida del 28 de febrero. Naturaleza,
+  navegación y shopping en un solo viaje.
+pubDate: Feb 28 2026
+heroImage: ../../assets/blog-cruce-andino-agencia.jpg
 ---
 
 ## Una travesía mística entre lagos y volcanes
