@@ -5,7 +5,7 @@ import BlogPost from "../../layouts/BlogPost.astro";
 export async function getStaticPaths() {
     const posts = await getCollection("travel");
     return posts.map((post) => ({
-        params: { slug: post.id },
+        params: { slug: post.id }, // O post.slug dependiendo de tu versión de Astro
         props: post,
     }));
 }
@@ -13,8 +13,16 @@ type Props = CollectionEntry<"travel">;
 
 const post = Astro.props;
 const { Content } = await render(post);
+
+// Extraemos los datos del frontmatter para mayor claridad
+const { title, description, travelDate, heroImage } = post.data;
 ---
 
-<BlogPost {...post.data} date={post.data.travelDate}>
+<BlogPost
+    title={title}
+    description={description}
+    heroImage={heroImage}
+    date={travelDate}
+>
     <Content />
 </BlogPost>

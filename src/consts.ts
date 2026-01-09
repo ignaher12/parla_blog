@@ -2,4 +2,4 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 
 export const SITE_TITLE = 'Parla di Viaggi';
-export const SITE_DESCRIPTION = 'Welcome to my website!';
+export const SITE_DESCRIPTION = 'Agencia de viajes. Mar del Plata';

@@ -6,13 +6,17 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
+import Layout from "../components/Layout.astro";
 
 const travelPosts = (await getCollection("travel")).sort(
 	(a, b) => a.data.travelDate.valueOf() - b.data.travelDate.valueOf(),
 );
 ---
 
-<!doctype html>
+<Layout title="Parla di Viaggi" description="Agencia de viajes. Mar del Plata">
+	<main></main>
+</Layout>
+
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />

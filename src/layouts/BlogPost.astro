@@ -18,7 +18,7 @@ interface Props {
 const { title, description, date, updatedDate, heroImage } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="es">
 	<head>
 		<BaseHead title={title} description={description} />
 		<style>
@@ -62,6 +62,23 @@ const { title, description, date, updatedDate, heroImage } = Astro.props;
 				font-style: italic;
 			}
 		</style>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<title>{title}</title>
+		<meta name="description" content={description} />
+
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		{
+			heroImage && (
+				<meta
+					property="og:image"
+					content={new URL(heroImage, Astro.url)}
+				/>
+			)
+		}
 	</head>
 
 	<body>
