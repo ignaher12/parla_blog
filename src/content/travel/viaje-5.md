@@ -1,7 +1,7 @@
 ---
 title: 'Safari en Kenia y Tanzania'
 description: 'La gran migración, los "Cinco Grandes" y atardeceres en la sabana. El viaje de tu vida en África.'
-pubDate: 'Sep 12 2026'
+travelDate: 'Sep 12 2026'
 heroImage: '../../assets/safari.png'
 ---
 

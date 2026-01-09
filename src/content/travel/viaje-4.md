@@ -1,7 +1,7 @@
 ---
 title: 'Islandia: Tierra de Fuego y Hielo'
 description: 'Caza de auroras boreales, cascadas imponentes y aguas termales. Una aventura épica en el círculo polar.'
-pubDate: 'Oct 05 2026'
+travelDate: 'Oct 05 2026'
 heroImage: '../../assets/iceland.png'
 ---
 

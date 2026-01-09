@@ -139,6 +139,7 @@ import HeaderLink from "./HeaderLink.astro";
 		nav {
 			display: flex;
 			flex-direction: column;
+			align-items: center;
 			gap: 0.5rem;
 		}
 
@@ -146,14 +147,22 @@ import HeaderLink from "./HeaderLink.astro";
 			position: static;
 			transform: none;
 			width: 100%;
-			justify-content: center;
-			gap: 0.8rem;
-			font-size: 0.9rem;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			align-items: center;
+			justify-content: space-between; /* distribute space */
+			gap: 0.2rem; /* minimal gap */
+			font-size: 0.7rem; /* smaller font to fit */
+			text-align: center;
+			overflow-x: auto; /* allow scroll if it really doesn't fit */
+			white-space: nowrap;
 		}
 
 		.logo-container {
 			flex-direction: column;
 			justify-content: center;
+			align-items: center;
 			transition: all 0.3s ease; /* smooth transition for hiding */
 		}
 

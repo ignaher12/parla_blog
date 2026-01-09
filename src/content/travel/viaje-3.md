@@ -1,7 +1,7 @@
 ---
 title: 'Provenza: Ruta de la Lavanda'
 description: 'Perdete en los campos violetas del sur de Francia. Pueblos medievales, vinos exquisitos y paisajes de ensueño.'
-pubDate: 'Jul 10 2026'
+travelDate: 'Jul 10 2026'
 heroImage: '../../assets/provence.png'
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: 'Japón: Tradición y Futuro'
 description: 'Descubrí la magia del país del sol naciente. Cerezos en flor, templos milenarios y tecnología de punta.'
-pubDate: 'Mar 15 2026'
+travelDate: 'Mar 15 2026'
 heroImage: '../../assets/japan.jpg'
 ---
 

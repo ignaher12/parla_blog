@@ -8,7 +8,7 @@ import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 
 const travelPosts = (await getCollection("travel")).sort(
-	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
+	(a, b) => a.data.travelDate.valueOf() - b.data.travelDate.valueOf(),
 );
 ---
 
@@ -48,7 +48,7 @@ const travelPosts = (await getCollection("travel")).sort(
 					class="hero-bg"
 				/>
 				<div class="hero-content">
-					<h1>Parla di Viaggio</h1>
+					<h1>Parla di Viaggi</h1>
 					<p class="subtitle">Agencia de viajes.</p>
 					<div class="description">
 						<p>
@@ -131,10 +131,10 @@ const travelPosts = (await getCollection("travel")).sort(
 												<div class="trip-info">
 													<h3>{post.data.title}</h3>
 													<p class="trip-date">
-														{post.data.pubDate
+														{post.data.travelDate
 															? new Date(
 																	post.data
-																		.pubDate,
+																		.travelDate,
 																).toLocaleDateString(
 																	"es-AR",
 																	{

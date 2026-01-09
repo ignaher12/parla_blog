@@ -1,0 +1,24 @@
+[2m13:55:45[22m [34m[content][39m Syncing content
+[2m13:55:45[22m [34m[content][39m Synced content
+[2m13:55:45[22m [34m[types][39m Generated [2m659ms[22m
+[2m13:55:45[22m [34m[check][39m Getting diagnostics for Astro files in C:\Users\ignah\Desktop\parlablog\ossified-orbit...
+[96msrc/layouts/BlogPost.astro[0m:[93m3[0m:[93m1[0m - [93mwarning[0m[90m ts(6133): [0m'CollectionEntry' is declared but its value is never read.
+
+[7m3[0m import type { CollectionEntry } from "astro:content";
+[7m [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/about.astro[0m:[93m9[0m:[93m2[0m - [91merror[0m[90m ts(2322): [0mType '{ children: any; title: string; description: string; pubDate: Date; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'pubDate' does not exist on type 'IntrinsicAttributes & Props'.
+
+[7m9[0m  pubDate={new Date("December 08 2025")}
+[7m [0m [91m ~~~~~~~[0m
+[96msrc/pages/about.astro[0m:[93m2[0m:[93m1[0m - [93mwarning[0m[90m ts(6133): [0m'AboutHeroImage' is declared but its value is never read.
+
+[7m2[0m import AboutHeroImage from "../assets/blog-placeholder-about.jpg";
+[7m [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+Result (18 files): 
+- 1 error
+- 0 warnings
+- 2 hints
+
