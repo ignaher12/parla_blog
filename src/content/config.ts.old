@@ -9,7 +9,7 @@ const travel = defineCollection({
         // Transform string to Date object
         pubDate: z.coerce.date(),
         updatedDate: z.coerce.date().optional(),
-        heroImage: z.string(),
+        heroImage: image(),
     }),
 });
 
@@ -20,7 +20,7 @@ const post = defineCollection({
         description: z.string(),
         pubDate: z.coerce.date(),
         updatedDate: z.coerce.date().optional(),
-        heroImage: z.string(),
+        heroImage: image(),
     }),
 });
 

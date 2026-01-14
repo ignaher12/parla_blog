@@ -11,6 +11,37 @@ import Layout from "../components/Layout.astro";
 const travelPosts = (await getCollection("travel")).sort(
 	(a, b) => a.data.travelDate.valueOf() - b.data.travelDate.valueOf(),
 );
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+	"/src/assets/**/*.{jpeg,jpg,png,gif}",
+);
+
+const resolveImage = async (imagePath: string | ImageMetadata | undefined) => {
+	if (!imagePath) return undefined;
+	if (typeof imagePath === "string") {
+		// Resolve relative paths (assuming they start with ../../assets/ or similar)
+		// We want to match /src/assets/...
+		const filename = imagePath.split("/").pop();
+		if (!filename) return undefined;
+
+		const matchingKey = Object.keys(images).find((key) =>
+			key.endsWith(filename),
+		);
+		if (matchingKey) {
+			const mod = await images[matchingKey]();
+			return mod.default;
+		}
+		return undefined;
+	}
+	return imagePath;
+};
+
+const processedTravelPosts = await Promise.all(
+	travelPosts.map(async (post) => {
+		const resolvedHero = await resolveImage(post.data.heroImage);
+		return { ...post, resolvedHero };
+	}),
+);
 ---
 
 <Layout
@@ -107,10 +138,10 @@ const travelPosts = (await getCollection("travel")).sort(
 					<div class="carousel-viewport" id="carouselViewport">
 						<div class="trips-carousel">
 							{
-								travelPosts.map((post) => {
+								processedTravelPosts.map((post) => {
 									if (!post) return null;
 
-									const imageSrc = post.data.heroImage;
+									const imageSrc = post.resolvedHero;
 
 									return (
 										<div class="trip-card">

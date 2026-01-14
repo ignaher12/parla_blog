@@ -13,8 +13,32 @@ type Props = CollectionEntry<"post">;
 
 const post = Astro.props;
 const { Content } = await render(post);
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+	"/src/assets/**/*.{jpeg,jpg,png,gif}",
+);
+
+const resolveImage = async (imagePath: string | ImageMetadata | undefined) => {
+	if (!imagePath) return undefined;
+	if (typeof imagePath === "string") {
+		const filename = imagePath.split("/").pop();
+		if (!filename) return undefined;
+
+		const matchingKey = Object.keys(images).find((key) =>
+			key.endsWith(filename),
+		);
+		if (matchingKey) {
+			const mod = await images[matchingKey]();
+			return mod.default;
+		}
+		return undefined;
+	}
+	return imagePath;
+};
+
+const resolvedHero = await resolveImage(post.data.heroImage);
 ---
 
-<BlogPost {...post.data} date={post.data.pubDate}>
+<BlogPost {...post.data} date={post.data.pubDate} heroImage={resolvedHero}>
 	<Content />
 </BlogPost>
