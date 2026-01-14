@@ -90,25 +90,102 @@ const processedTravelPosts = await Promise.all(
 					<p class="subtitle">Agencia de viajes.</p>
 					<div class="description">
 						<p>
-							Aca iría una descripción breve de algo que
-							caracterice a la agencia.
+							Nos especializamos en acompañar a cada viajero desde
+							el primer contacto, ofreciendo asesoramiento
+							personalizado y una planificación cuidadosa en cada
+							etapa del viaje.
 						</p>
-						<p>Por ejemplo:</p>
 						<p class="author">
-							Especializada en viajes personalizados, tanto a
-							Europa como el resto de destinos.
+							Nuestro objetivo es simple: que disfrutes de tu
+							experiencia sin preocupaciones, sabiendo que cada
+							detalle fue pensado para vos.
 						</p>
 					</div>
 				</div>
 			</div>
 
+			<div class="services-section">
+				<h2 class="section-title">NUESTROS SERVICIOS</h2>
+				<div class="divider"></div>
+				<div class="services-grid">
+					<div class="service-card">
+						<h3>Diseño de viajes a medida</h3>
+						<p>
+							Creamos itinerarios personalizados, adaptados a los
+							intereses, tiempos y presupuesto de cada viajero.
+							Cada propuesta se diseña desde cero, evitando
+							paquetes genéricos y priorizando experiencias
+							auténticas.
+						</p>
+					</div>
+					<div class="service-card">
+						<h3>Viajes familiares y grupales</h3>
+						<p>
+							Organizamos vacaciones familiares y viajes en grupo,
+							cuidando la logística, los tiempos y las actividades
+							para que todos disfruten sin preocupaciones.
+						</p>
+					</div>
+					<div class="service-card">
+						<h3>Escapadas en pareja</h3>
+						<p>
+							Diseñamos escapadas románticas y viajes especiales
+							para celebrar aniversarios, lunas de miel o
+							simplemente desconectar, con propuestas adaptadas a
+							cada estilo de viaje.
+						</p>
+					</div>
+					<div class="service-card">
+						<h3>Viajes nacionales e internacionales</h3>
+						<p>
+							Asesoramos y organizamos viajes dentro de Argentina
+							y al exterior, incluyendo destinos clásicos y
+							experiencias menos convencionales, siempre con
+							planificación detallada.
+						</p>
+					</div>
+					<div class="service-card">
+						<h3>Gestión de servicios turísticos</h3>
+						<p>
+							Nos encargamos de la contratación y coordinación de
+							pasajes aéreos, alojamientos, traslados,
+							excursiones, actividades y seguros de viaje. Todo
+							integrado en una sola propuesta clara y confiable.
+						</p>
+					</div>
+					<div class="service-card">
+						<h3>Asesoramiento y acompañamiento</h3>
+						<p>
+							Brindamos atención directa y cercana antes, durante
+							y después del viaje, resolviendo dudas y acompañando
+							al viajero en cada etapa de su experiencia.
+						</p>
+					</div>
+					<div class="service-card full-width">
+						<h3>Planificación y organización integral</h3>
+						<p>
+							Cada viaje se planifica de forma meticulosa,
+							contemplando detalles logísticos, tiempos,
+							recomendaciones y alternativas, para garantizar
+							tranquilidad y disfrute total.
+						</p>
+					</div>
+				</div>
+			</div>
 			<div class="intro-grid">
 				<div class="intro-text">
-					<h2>Titulo</h2>
-					<p class="intro-highlight">Subtitulo</p>
+					<h2>Viajes Especializados para Mujeres</h2>
+					<p class="intro-highlight">
+						Seguridad, compañia y disfrute
+					</p>
 					<p>
-						Template text... aquí iría la descripción detallada de
-						tus servicios
+						Uno de nuestros principales diferenciales es la
+						organización de viajes pensados especialmente para
+						mujeres. Diseñamos experiencias que priorizan la
+						seguridad, la comodidad, el acompañamiento y el
+						disfrute, creando itinerarios adaptados a los intereses
+						y necesidades de mujeres que desean viajar solas, con
+						amigas o en grupos afines.
 					</p>
 					<div class="cta-container">
 						<a href="/about" class="cta-button">Descubre Más</a>
@@ -386,6 +463,43 @@ const processedTravelPosts = await Promise.all(
 					height: 300px;
 					order: -1; /* Image on top on mobile? Optional */
 				}
+			}
+
+			/* Services Section Styles */
+			.services-section {
+				max-width: 1200px;
+				margin: 5rem auto;
+				padding: 0 20px;
+				text-align: center;
+			}
+			.services-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+				gap: 2rem;
+				text-align: left;
+			}
+			.service-card {
+				padding: 2rem;
+				background: #f9f9f9;
+				border-radius: 12px;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+				transition: transform 0.3s ease;
+			}
+			.service-card:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+			}
+			.service-card h3 {
+				color: #008080;
+				margin-bottom: 1rem;
+				font-size: 1.3rem;
+			}
+			.service-card p {
+				color: #555;
+				line-height: 1.6;
+			}
+			.full-width {
+				grid-column: 1 / -1;
 			}
 
 			/* Trips Section Styles */
