@@ -100,78 +100,55 @@ const processedTravelPosts = await Promise.all(
 							experiencia sin preocupaciones, sabiendo que cada
 							detalle fue pensado para vos.
 						</p>
+						<div class="hero-cta dropdown-container">
+							<button
+								id="ctaDropdownBtn"
+								class="cta-button primary"
+							>
+								Armá tu Viaje
+							</button>
+							<div
+								id="ctaDropdownMenu"
+								class="dropdown-menu hidden"
+							>
+								<a
+									href="https://wa.me/5492235261703"
+									target="_blank"
+									class="dropdown-item"
+								>
+									Contactar a Andrea
+								</a>
+								<a
+									href="https://wa.me/5492235828803"
+									target="_blank"
+									class="dropdown-item"
+								>
+									Contactar a Claudia
+								</a>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="services-section">
-				<h2 class="section-title">NUESTROS SERVICIOS</h2>
-				<div class="divider"></div>
-				<div class="services-grid">
-					<div class="service-card">
-						<h3>Diseño de viajes a medida</h3>
-						<p>
-							Creamos itinerarios personalizados, adaptados a los
-							intereses, tiempos y presupuesto de cada viajero.
-							Cada propuesta se diseña desde cero, evitando
-							paquetes genéricos y priorizando experiencias
-							auténticas.
-						</p>
-					</div>
-					<div class="service-card">
-						<h3>Viajes familiares y grupales</h3>
-						<p>
-							Organizamos vacaciones familiares y viajes en grupo,
-							cuidando la logística, los tiempos y las actividades
-							para que todos disfruten sin preocupaciones.
-						</p>
-					</div>
-					<div class="service-card">
-						<h3>Escapadas en pareja</h3>
-						<p>
-							Diseñamos escapadas románticas y viajes especiales
-							para celebrar aniversarios, lunas de miel o
-							simplemente desconectar, con propuestas adaptadas a
-							cada estilo de viaje.
-						</p>
-					</div>
-					<div class="service-card">
-						<h3>Viajes nacionales e internacionales</h3>
-						<p>
-							Asesoramos y organizamos viajes dentro de Argentina
-							y al exterior, incluyendo destinos clásicos y
-							experiencias menos convencionales, siempre con
-							planificación detallada.
-						</p>
-					</div>
-					<div class="service-card">
-						<h3>Gestión de servicios turísticos</h3>
-						<p>
-							Nos encargamos de la contratación y coordinación de
-							pasajes aéreos, alojamientos, traslados,
-							excursiones, actividades y seguros de viaje. Todo
-							integrado en una sola propuesta clara y confiable.
-						</p>
-					</div>
-					<div class="service-card">
-						<h3>Asesoramiento y acompañamiento</h3>
-						<p>
-							Brindamos atención directa y cercana antes, durante
-							y después del viaje, resolviendo dudas y acompañando
-							al viajero en cada etapa de su experiencia.
-						</p>
-					</div>
-					<div class="service-card full-width">
-						<h3>Planificación y organización integral</h3>
-						<p>
-							Cada viaje se planifica de forma meticulosa,
-							contemplando detalles logísticos, tiempos,
-							recomendaciones y alternativas, para garantizar
-							tranquilidad y disfrute total.
-						</p>
-					</div>
-				</div>
-			</div>
+			<script>
+				const ctaBtn = document.getElementById("ctaDropdownBtn");
+				const ctaMenu = document.getElementById("ctaDropdownMenu");
+
+				if (ctaBtn && ctaMenu) {
+					ctaBtn.addEventListener("click", (e) => {
+						e.stopPropagation();
+						ctaMenu.classList.toggle("hidden");
+					});
+
+					document.addEventListener("click", (e) => {
+						if (!ctaMenu.contains(e.target as Node)) {
+							ctaMenu.classList.add("hidden");
+						}
+					});
+				}
+			</script>
+
 			<div class="intro-grid">
 				<div class="intro-text">
 					<h2>Viajes Especializados para Mujeres</h2>
@@ -188,7 +165,7 @@ const processedTravelPosts = await Promise.all(
 						amigas o en grupos afines.
 					</p>
 					<div class="cta-container">
-						<a href="/about" class="cta-button">Descubre Más</a>
+						<a href="/travel" class="cta-button">Descubre Más</a>
 					</div>
 				</div>
 				<div class="intro-image-container">
@@ -196,10 +173,17 @@ const processedTravelPosts = await Promise.all(
 						class="placeholder-img"
 						style="background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666;"
 					>
-						<span>Template Image</span>
+						<Image
+							src="/imgs/grupo.jpg"
+							alt="Grupo de mujeres"
+							width={400}
+							height={400}
+							class="trip-img"
+						/>
 					</div>
 				</div>
 			</div>
+
 			<div class="trips-section">
 				<h2 class="section-title">VIAJES GRUPALES</h2>
 				<div class="divider"></div>
@@ -277,6 +261,192 @@ const processedTravelPosts = await Promise.all(
 					</button>
 				</div>
 			</div>
+
+			<div class="services-section">
+				<h2 class="section-title">NUESTROS SERVICIOS</h2>
+				<div class="divider"></div>
+				<div class="services-grid">
+					<div class="service-card">
+						<div class="icon-container">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								><circle cx="12" cy="12" r="10"></circle><path
+									d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z"
+								></path></svg
+							>
+						</div>
+						<h3>Diseño de viajes a medida</h3>
+						<p>
+							Creamos itinerarios personalizados, adaptados a los
+							intereses, tiempos y presupuesto de cada viajero.
+							Cada propuesta se diseña desde cero.
+						</p>
+					</div>
+					<div class="service-card">
+						<div class="icon-container">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								><path
+									d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
+								></path><circle cx="8.5" cy="7" r="4"
+								></circle><line x1="20" x2="20" y1="8" y2="14"
+								></line><line x1="23" x2="17" y1="11" y2="11"
+								></line></svg
+							>
+						</div>
+						<h3>Viajes familiares y grupales</h3>
+						<p>
+							Organizamos vacaciones familiares y viajes en grupo,
+							cuidando la logística, los tiempos y las actividades
+							para que todos disfruten.
+						</p>
+					</div>
+					<div class="service-card">
+						<div class="icon-container">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								><path
+									d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+								></path></svg
+							>
+						</div>
+						<h3>Escapadas en pareja</h3>
+						<p>
+							Diseñamos escapadas románticas y viajes especiales
+							para celebrar aniversarios, lunas de miel o
+							simplemente desconectar.
+						</p>
+					</div>
+					<div class="service-card">
+						<div class="icon-container">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								><circle cx="12" cy="12" r="10"></circle><path
+									d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"
+								></path><path d="M2 12h20"></path></svg
+							>
+						</div>
+						<h3>Viajes nacionales e internacionales</h3>
+						<p>
+							Asesoramos y organizamos viajes dentro de Argentina
+							y al exterior, incluyendo destinos clásicos y
+							experiencias menos convencionales.
+						</p>
+					</div>
+					<div class="service-card">
+						<div class="icon-container">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								><path
+									d="M3 7v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"
+								></path><path
+									d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"
+								></path></svg
+							>
+						</div>
+						<h3>Gestión de servicios turísticos</h3>
+						<p>
+							Nos encargamos de la contratación y coordinación de
+							pasajes aéreos, alojamientos, traslados, excursiones
+							y seguros de viaje.
+						</p>
+					</div>
+					<div class="service-card">
+						<div class="icon-container">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								><path
+									d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+								></path></svg
+							>
+						</div>
+						<h3>Asesoramiento y acompañamiento</h3>
+						<p>
+							Brindamos atención directa y cercana antes, durante
+							y después del viaje, resolviendo dudas y acompañando
+							al viajero en cada etapa.
+						</p>
+					</div>
+					<div class="service-card full-width">
+						<div class="icon-container">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								><path d="M8 2v4"></path><path d="M16 2v4"
+								></path><rect
+									width="18"
+									height="18"
+									x="3"
+									y="4"
+									rx="2"></rect><path d="M3 10h18"
+								></path><path d="m9 16 2 2 4-4"></path></svg
+							>
+						</div>
+						<h3>Planificación y organización integral</h3>
+						<p>
+							Cada viaje se planifica de forma meticulosa,
+							contemplando detalles logísticos, tiempos,
+							recomendaciones y alternativas, para garantizar
+							tranquilidad.
+						</p>
+					</div>
+				</div>
+			</div>
 		</main>
 
 		<script>
@@ -313,7 +483,7 @@ const processedTravelPosts = await Promise.all(
 				position: relative;
 				width: 100%;
 				min-height: 600px;
-				overflow: hidden;
+				/* overflow: hidden; Removed to allow dropdown to show */
 				display: flex;
 				align-items: center;
 				justify-content: center;
@@ -637,6 +807,72 @@ const processedTravelPosts = await Promise.all(
 				.carousel-wrapper {
 					/* On mobile, maybe hide buttons and just swipe? or keep small buttons */
 				}
+			}
+
+			/* New UX Styles */
+			.hero-cta {
+				margin-top: 2rem;
+			}
+			.dropdown-container {
+				position: relative;
+				display: inline-block;
+			}
+			.cta-button.primary {
+				background-color: #008080; /* Teal */
+				font-size: 1.2rem;
+				padding: 15px 40px;
+				border: none;
+				cursor: pointer;
+				color: white;
+				font-family: inherit; /* Inherit font from parent */
+			}
+			.dropdown-menu {
+				position: absolute;
+				top: 100%;
+				left: 50%;
+				transform: translateX(-50%);
+				background-color: white;
+				min-width: 220px;
+				box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+				z-index: 10;
+				border-radius: 8px;
+				margin-top: 10px;
+				padding: 10px 0;
+				overflow: hidden;
+				transition:
+					opacity 0.2s,
+					visibility 0.2s;
+			}
+			.dropdown-menu.hidden {
+				display: none;
+			}
+			.dropdown-item {
+				color: #333;
+				padding: 12px 16px;
+				text-decoration: none;
+				display: block;
+				font-size: 1rem;
+				transition: background-color 0.2s;
+				text-align: left;
+			}
+			.dropdown-item:hover {
+				background-color: #f1f1f1;
+				color: #008080;
+			}
+
+			.cta-button.primary:hover {
+				background-color: #006666;
+			}
+			.icon-container {
+				width: 60px;
+				height: 60px;
+				background-color: rgba(0, 128, 128, 0.1);
+				color: #008080;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-bottom: 1.5rem;
 			}
 		</style>
 		<Footer />
