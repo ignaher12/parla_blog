@@ -1,4 +1,5 @@
 ---
+import { INSTAGRAM_URL } from "../consts";
 const today = new Date();
 ---
 
@@ -6,7 +7,8 @@ const today = new Date();
 	&copy; {today.getFullYear()} Parla di Viaggi. Todos los derechos reservados.
 	<div class="social-links">
 		<a
-			href="https://www.instagram.com/parladiviaggi/"
+			href={INSTAGRAM_URL}
+			rel="noopener noreferrer"
 			target="_blank"
 			class="text-gray-600 hover:text-pink-600 transition-colors"
 		>

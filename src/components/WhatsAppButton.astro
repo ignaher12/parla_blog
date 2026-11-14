@@ -1,18 +1,19 @@
 ---
-
+import { ASESORAS, whatsappUrl } from "../consts";
 ---
 
 <div class="whatsapp-wrapper">
     <!-- Options Container -->
     <div class="whatsapp-options">
-        <!-- Option 1 -->
-        <a
-            href="https://wa.me/5492235261703"
+        {
+            ASESORAS.map((a) => (
+            <a
+            href={whatsappUrl(a.whatsapp)}
             class="contact-option"
             target="_blank"
             rel="noopener noreferrer"
         >
-            <span class="tooltip">Contactar a Andrea</span>
+            <span class="tooltip">Contactar a {a.nombre}</span>
             <div class="contact-btn">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -28,36 +29,11 @@
                     ><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
                     ></path><circle cx="12" cy="7" r="4"></circle></svg
                 >
-                <span class="label-mobile">Andrea</span>
+                <span class="label-mobile">{a.nombre}</span>
             </div>
         </a>
-
-        <!-- Option 2 -->
-        <a
-            href="https://wa.me/5492235828803"
-            class="contact-option"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            <span class="tooltip">Contactar a Claudia</span>
-            <div class="contact-btn">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="icon user"
-                    ><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
-                    ></path><circle cx="12" cy="7" r="4"></circle></svg
-                >
-                <span class="label-mobile">Claudia</span>
-            </div>
-        </a>
+            ))
+        }
     </div>
 
     <!-- Main Float Button -->

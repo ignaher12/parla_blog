@@ -1,4 +1,5 @@
 ---
+import { INSTAGRAM_URL } from "../consts";
 import { SITE_TITLE } from "../consts";
 import HeaderLink from "./HeaderLink.astro";
 ---
@@ -19,7 +20,8 @@ import HeaderLink from "./HeaderLink.astro";
 		</div>
 		<div class="social-links">
 			<a
-				href="https://www.instagram.com/parladiviaggi/"
+				href={INSTAGRAM_URL}
+				rel="noopener noreferrer"
 				target="_blank"
 				class="text-gray-600 hover:text-pink-600 transition-colors"
 			>

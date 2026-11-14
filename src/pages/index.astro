@@ -2,7 +2,12 @@
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import {
+	ASESORAS,
+	SITE_DESCRIPTION,
+	SITE_TITLE,
+	whatsappUrl,
+} from "../consts";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
@@ -44,29 +49,9 @@ const processedTravelPosts = await Promise.all(
 );
 ---
 
-<html lang="en">
+<html lang="es-AR">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<script
-			is:inline
-			src="https://identity.netlify.com/v1/netlify-identity-widget.js"
-		></script>
-		<script>
-			declare global {
-				interface Window {
-					netlifyIdentity: any;
-				}
-			}
-			if (window.netlifyIdentity) {
-				window.netlifyIdentity.on("init", (user: any) => {
-					if (!user) {
-						window.netlifyIdentity.on("login", () => {
-							document.location.href = "/admin/";
-						});
-					}
-				});
-			}
-		</script>
 	</head>
 	<body>
 		<Header />
@@ -104,20 +89,18 @@ const processedTravelPosts = await Promise.all(
 								id="ctaDropdownMenu"
 								class="dropdown-menu hidden"
 							>
-								<a
-									href="https://wa.me/5492235261703"
-									target="_blank"
-									class="dropdown-item"
-								>
-									Contactar a Andrea
-								</a>
-								<a
-									href="https://wa.me/5492235828803"
-									target="_blank"
-									class="dropdown-item"
-								>
-									Contactar a Claudia
-								</a>
+								{
+									ASESORAS.map((a) => (
+										<a
+											href={whatsappUrl(a.whatsapp)}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="dropdown-item"
+										>
+											Contactar a {a.nombre}
+										</a>
+									))
+								}
 							</div>
 						</div>
 					</div>

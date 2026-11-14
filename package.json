@@ -1,5 +1,5 @@
 {
-  "name": "ossified-orbit",
+  "name": "parla-di-viaggi",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,12 +9,15 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.6",
     "@astrojs/mdx": "^4.3.13",
+    "@astrojs/node": "^9.5.5",
     "@astrojs/rss": "^4.0.14",
     "@astrojs/sitemap": "^3.6.1",
     "astro": "^5.16.5",
-    "sharp": "^0.34.3",
+    "sharp": "^0.34.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
     "typescript": "^5.9.3"
   }
 }

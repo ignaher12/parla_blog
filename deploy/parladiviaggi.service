@@ -1,0 +1,33 @@
+[Unit]
+Description=Parla di Viaggi (Astro, Node)
+After=network.target
+
+[Service]
+Type=simple
+User=parla
+Group=parla
+WorkingDirectory=/var/www/parladiviaggi/current
+ExecStart=/usr/local/bin/node dist/server/entry.mjs
+Environment=NODE_ENV=production
+Environment=HOST=127.0.0.1
+Environment=PORT=4321
+Environment=DATA_DIR=/var/lib/parladiviaggi
+EnvironmentFile=-/etc/parladiviaggi.env
+Restart=always
+RestartSec=3
+MemoryMax=350M
+
+# Aislamiento
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/parladiviaggi
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target
