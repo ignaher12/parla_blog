@@ -1,21 +1,25 @@
 ---
-import { Image } from "astro:assets";
-import { getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
-import FormattedDate from "../../components/FormattedDate.astro";
 import Header from "../../components/Header.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import { SITE_TITLE } from "../../consts";
+import { precioTexto, rangoFechas } from "../../lib/formato";
+import { getMedia, mediaSrcset, mediaUrl } from "../../lib/media";
+import { listarViajes } from "../../lib/viajes";
 
-const posts = (await getCollection("travel")).sort(
-    (a, b) => a.data.travelDate.valueOf() - b.data.travelDate.valueOf(),
-);
+const posts = listarViajes({ soloPublicados: true })
+    .sort((a, b) => Number(b.destacado) - Number(a.destacado))
+    .map((v) => ({ ...v, foto: getMedia(v.portada) }));
 ---
 
 <!doctype html>
 <html lang="es-AR">
     <head>
-        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+        <BaseHead
+            title={`Próximos viajes | ${SITE_TITLE}`}
+            description="Salidas grupales y paquetes especiales de Parla di Viaggi, agencia de viajes de Mar del Plata."
+        />
         <style>
             main {
                 width: 960px;
@@ -92,30 +96,41 @@ const posts = (await getCollection("travel")).sort(
     </head>
     <body>
         <Header />
+        <WhatsAppButton />
         <main>
             <section>
                 <ul>
                     {
-                        posts.map((post) => (
+                        posts.length === 0 ? (
                             <li>
-                                <a href={`/travel/${post.id}/`}>
-                                    {post.data.heroImage && (
-                                        <Image
-                                            width={720}
-                                            height={360}
-                                            src={post.data.heroImage}
-                                            alt=""
-                                        />
-                                    )}
-                                    <h4 class="title">{post.data.title}</h4>
-                                    <p class="date">
-                                        <FormattedDate
-                                            date={post.data.travelDate}
-                                        />
-                                    </p>
-                                </a>
+                                <p>Pronto vamos a publicar nuevas salidas. ¡Escribinos por WhatsApp!</p>
                             </li>
-                        ))
+                        ) : (
+                            posts.map((v) => (
+                                <li>
+                                    <a href={`/travel/${v.slug}/`}>
+                                        {v.foto && (
+                                            <img
+                                                src={mediaUrl(v.foto.id, 960)}
+                                                srcset={mediaSrcset(v.foto)}
+                                                sizes="(max-width: 720px) 100vw, 960px"
+                                                alt={v.foto.alt || v.titulo}
+                                                loading="lazy"
+                                            />
+                                        )}
+                                        <h4 class="title">{v.titulo}</h4>
+                                        <p class="date">
+                                            {[
+                                                rangoFechas(v.fecha_salida, v.fecha_regreso) || v.destino,
+                                                precioTexto(v.precio, v.moneda) && `desde ${precioTexto(v.precio, v.moneda)}`,
+                                            ]
+                                                .filter(Boolean)
+                                                .join(" · ")}
+                                        </p>
+                                    </a>
+                                </li>
+                            ))
+                        )
                     }
                 </ul>
             </section>

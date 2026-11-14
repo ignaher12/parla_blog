@@ -1,4 +1,4 @@
-# Bloque de Caddy para Parla di Viaggi. Se agrega al final de /etc/caddy/Caddyfile.
+# Bloque de Caddy para Parla di Viaggi. Va al final de /etc/caddy/Caddyfile.
 # Cloudflare hace de proxy (SSL "Full (strict)") con un certificado de origen de Cloudflare.
 # Cuando se mude el dominio principal, se agregan parladiviaggi.com.ar y www acá.
 
@@ -6,22 +6,22 @@ nuevo.parladiviaggi.com.ar {
 	tls /etc/caddy/certs/parladiviaggi.com.ar.pem /etc/caddy/certs/parladiviaggi.com.ar.key
 	encode zstd gzip
 
-	root * /var/www/parladiviaggi/current/dist/client
-
-	# Archivos con hash de Astro: se cachean un año.
-	@hashed path /_astro/*
-	header @hashed Cache-Control "public, max-age=31536000, immutable"
-
-	# Páginas y archivos estáticos generados en el build.
-	@static file {
-		try_files {path} {path}/index.html {path}.html
-	}
-	handle @static {
-		rewrite * {http.matchers.file.relative}
+	# Archivos generados al compilar (JS/CSS con hash, imágenes y fuentes fijas).
+	@estaticos path /_astro/* /imgs/* /fonts/* /favicon.png /googlec489d69842779f22.html
+	handle @estaticos {
+		root * /var/www/parladiviaggi/current/dist/client
+		header /_astro/* Cache-Control "public, max-age=31536000, immutable"
 		file_server
 	}
 
-	# Todo lo demás (admin y API en la fase 2, y las páginas 404) va a Node.
+	# Fotos subidas desde el panel (nombres únicos: se cachean un año).
+	handle /media/* {
+		root * /var/lib/parladiviaggi
+		header Cache-Control "public, max-age=31536000, immutable"
+		file_server
+	}
+
+	# Todo lo demás (páginas, panel admin y API) lo genera Node.
 	handle {
 		reverse_proxy 127.0.0.1:4321
 	}

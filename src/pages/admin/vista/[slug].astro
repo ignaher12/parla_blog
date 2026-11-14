@@ -1,0 +1,10 @@
+---
+// Vista previa de un viaje desde el panel (muestra también los ocultos).
+import DetalleViaje from "../../../components/DetalleViaje.astro";
+import { viajePorSlug } from "../../../lib/viajes";
+
+const viaje = viajePorSlug(Astro.params.slug ?? "", false);
+if (!viaje) return new Response("No existe", { status: 404 });
+---
+
+<DetalleViaje viaje={viaje} vistaPrevia />

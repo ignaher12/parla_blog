@@ -1,0 +1,411 @@
+---
+// Página de un viaje. La usan /travel/[slug] y la vista previa del panel.
+import { whatsappUrl } from "../consts";
+import { asesorasActivas } from "../lib/ajustes";
+import { precioTexto, rangoFechas } from "../lib/formato";
+import { getMedia, getMedias, mediaSrcset, mediaUrl } from "../lib/media";
+import { markdownAHtml } from "../lib/texto";
+import { ESTADOS, TIPOS, type Viaje } from "../lib/tipos";
+import BaseHead from "./BaseHead.astro";
+import Footer from "./Footer.astro";
+import Header from "./Header.astro";
+import WhatsAppButton from "./WhatsAppButton.astro";
+
+interface Props {
+	viaje: Viaje;
+	vistaPrevia?: boolean;
+}
+const { viaje: v, vistaPrevia = false } = Astro.props;
+
+const portada = getMedia(v.portada);
+const galeria = getMedias(v.galeria.filter((id) => id !== v.portada));
+const fechas = rangoFechas(v.fecha_salida, v.fecha_regreso);
+const precio = precioTexto(v.precio, v.moneda);
+const asesoras = asesorasActivas();
+const mensaje = `¡Hola! Quiero consultar por el viaje "${v.titulo}"${fechas ? ` (${fechas})` : ""}.`;
+const descripcion = v.resumen || `${TIPOS[v.tipo]}${v.destino ? ` a ${v.destino}` : ""}. ${fechas}`;
+---
+
+<!doctype html>
+<html lang="es-AR">
+	<head>
+		<BaseHead
+			title={`${v.titulo} | Parla di Viaggi`}
+			description={descripcion}
+			imagenUrl={portada ? mediaUrl(portada.id, 1600) : undefined}
+			noindex={vistaPrevia}
+		/>
+	</head>
+	<body>
+		{
+			vistaPrevia && (
+				<div class="aviso-previa">
+					Vista previa{v.publicado ? "" : " · Este viaje está oculto: todavía no se ve en el sitio"}
+				</div>
+			)
+		}
+		<Header />
+		<WhatsAppButton />
+		<main class="viaje">
+			<header class="viaje-portada">
+				{
+					portada && (
+						<img
+							src={mediaUrl(portada.id, 1600)}
+							srcset={mediaSrcset(portada)}
+							sizes="(max-width: 1100px) 100vw, 1100px"
+							alt={portada.alt || v.titulo}
+							fetchpriority="high"
+						/>
+					)
+				}
+				<div class="viaje-titulo">
+					<div class="viaje-chips">
+						<span class="chip">{TIPOS[v.tipo]}</span>
+						{v.etiqueta && <span class="chip chip-claro">{v.etiqueta}</span>}
+						<span class={`chip estado-${v.estado}`}>{ESTADOS[v.estado]}</span>
+					</div>
+					<h1>{v.titulo}</h1>
+					{v.destino && <p class="viaje-destino">{v.destino}</p>}
+				</div>
+			</header>
+
+			<section class="viaje-resumen">
+				<dl>
+					{
+						fechas && (
+							<div>
+								<dt>Fecha</dt>
+								<dd>{fechas}</dd>
+							</div>
+						)
+					}
+					<div>
+						<dt>Precio</dt>
+						<dd>
+							{precio ? <><small>desde</small> {precio}</> : "Consultar"}
+							{v.precio_nota && <small class="nota">{v.precio_nota}</small>}
+						</dd>
+					</div>
+				</dl>
+				{
+					v.estado !== "agotada" ? (
+						<div class="viaje-consultar">
+							{asesoras.map((a) => (
+								<a class="boton-wa" href={whatsappUrl(a.whatsapp, mensaje)} target="_blank" rel="noopener noreferrer">
+									Consultar con {a.nombre}
+								</a>
+							))}
+						</div>
+					) : (
+						<p class="agotado">Esta salida está agotada. ¡Escribinos para enterarte de la próxima!</p>
+					)
+				}
+			</section>
+
+			{v.descripcion && <article class="prosa" set:html={markdownAHtml(v.descripcion)} />}
+
+			{
+				v.itinerario.length > 0 && (
+					<section class="bloque">
+						<h2>Itinerario</h2>
+						<ol class="itinerario">
+							{v.itinerario.map((d, i) => (
+								<li>
+									<span class="itinerario-dia">Día {i + 1}</span>
+									<div>
+										{d.titulo && <h3>{d.titulo}</h3>}
+										{d.texto && <div class="prosa" set:html={markdownAHtml(d.texto)} />}
+									</div>
+								</li>
+							))}
+						</ol>
+					</section>
+				)
+			}
+
+			{
+				(v.incluye.length > 0 || v.no_incluye.length > 0) && (
+					<section class="bloque incluye">
+						{v.incluye.length > 0 && (
+							<div>
+								<h2>Incluye</h2>
+								<ul class="si">
+									{v.incluye.map((x) => (
+										<li>{x}</li>
+									))}
+								</ul>
+							</div>
+						)}
+						{v.no_incluye.length > 0 && (
+							<div>
+								<h2>No incluye</h2>
+								<ul class="no">
+									{v.no_incluye.map((x) => (
+										<li>{x}</li>
+									))}
+								</ul>
+							</div>
+						)}
+					</section>
+				)
+			}
+
+			{
+				galeria.length > 0 && (
+					<section class="bloque">
+						<h2>Galería</h2>
+						<div class="galeria">
+							{galeria.map((m) => (
+								<a href={mediaUrl(m.id, 1600)} target="_blank">
+									<img src={mediaUrl(m.id, 480)} srcset={mediaSrcset(m)} sizes="(max-width: 720px) 50vw, 340px" alt={m.alt || v.titulo} loading="lazy" />
+								</a>
+							))}
+						</div>
+					</section>
+				)
+			}
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.viaje {
+		--salvia: #7f9e88;
+		--salvia-oscuro: #4f6f5a;
+		--salvia-claro: #e6eee8;
+		width: 1100px;
+		max-width: 100%;
+		padding: 0 16px 64px;
+		font-family: "Arimo", system-ui, sans-serif;
+		font-size: 18px;
+	}
+	.aviso-previa {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		padding: 10px 16px;
+		background: #b7791f;
+		color: #fff;
+		font: 600 15px system-ui, sans-serif;
+		text-align: center;
+	}
+	.viaje-portada {
+		position: relative;
+		margin: 16px 0 24px;
+		border-radius: 20px;
+		overflow: hidden;
+		background: var(--salvia-claro);
+		min-height: 220px;
+	}
+	.viaje-portada img {
+		display: block;
+		width: 100%;
+		aspect-ratio: 16 / 8;
+		object-fit: cover;
+	}
+	.viaje-portada:has(img) .viaje-titulo {
+		position: absolute;
+		inset: auto 0 0;
+		padding: 80px 28px 24px;
+		background: linear-gradient(transparent, rgb(0 0 0 / 65%));
+		color: #fff;
+	}
+	.viaje-titulo {
+		padding: 28px;
+	}
+	.viaje-titulo h1 {
+		margin: 8px 0 4px;
+		color: inherit;
+		font-size: clamp(28px, 5vw, 46px);
+	}
+	.viaje-destino {
+		margin: 0;
+		font-size: 19px;
+		opacity: 0.92;
+	}
+	.viaje-chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+	.chip {
+		padding: 3px 12px;
+		border-radius: 999px;
+		background: var(--salvia);
+		color: #fff;
+		font-size: 14px;
+		font-weight: 700;
+	}
+	.chip-claro {
+		background: #fff;
+		color: var(--salvia-oscuro);
+	}
+	.estado-ultimos {
+		background: #b7791f;
+	}
+	.estado-agotada {
+		background: #b3402f;
+	}
+	.estado-consultar {
+		background: #5c6670;
+	}
+	.viaje-resumen {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 20px 24px;
+		margin-bottom: 32px;
+		border-radius: 16px;
+		background: var(--salvia-claro);
+	}
+	.viaje-resumen dl {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px 40px;
+		margin: 0;
+	}
+	.viaje-resumen dt {
+		font-size: 14px;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--salvia-oscuro);
+		font-weight: 700;
+	}
+	.viaje-resumen dd {
+		margin: 0;
+		font-size: 21px;
+		font-weight: 700;
+	}
+	.viaje-resumen small {
+		font-size: 15px;
+		font-weight: 400;
+	}
+	.viaje-resumen .nota {
+		display: block;
+		color: #555;
+	}
+	.viaje-consultar {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+	.boton-wa {
+		padding: 12px 20px;
+		border-radius: 999px;
+		background: #1f8f4e;
+		color: #fff;
+		font-weight: 700;
+		text-decoration: none;
+	}
+	.boton-wa:hover {
+		background: #18733e;
+	}
+	.agotado {
+		margin: 0;
+		font-weight: 600;
+	}
+	.prosa {
+		max-width: 760px;
+		line-height: 1.7;
+	}
+	.bloque {
+		margin-top: 40px;
+	}
+	.itinerario {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		border-left: 3px solid var(--salvia-claro);
+	}
+	.itinerario li {
+		display: grid;
+		grid-template-columns: 90px 1fr;
+		gap: 16px;
+		padding: 0 0 20px 20px;
+		position: relative;
+	}
+	.itinerario li::before {
+		content: "";
+		position: absolute;
+		left: -9px;
+		top: 4px;
+		width: 15px;
+		height: 15px;
+		border-radius: 50%;
+		background: var(--salvia);
+	}
+	.itinerario-dia {
+		font-weight: 700;
+		color: var(--salvia-oscuro);
+	}
+	.itinerario h3 {
+		margin: 0 0 4px;
+		font-size: 19px;
+	}
+	.incluye {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 24px;
+	}
+	.incluye ul {
+		list-style: none;
+		padding: 0;
+	}
+	.incluye li {
+		padding: 6px 0 6px 30px;
+		position: relative;
+	}
+	.incluye .si li::before,
+	.incluye .no li::before {
+		position: absolute;
+		left: 0;
+		font-weight: 700;
+	}
+	.incluye .si li::before {
+		content: "✓";
+		color: var(--salvia-oscuro);
+	}
+	.incluye .no li::before {
+		content: "✕";
+		color: #b3402f;
+	}
+	.galeria {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+		gap: 10px;
+	}
+	.galeria img {
+		display: block;
+		width: 100%;
+		aspect-ratio: 4 / 3;
+		object-fit: cover;
+		border-radius: 12px;
+	}
+	@media (max-width: 720px) {
+		.viaje {
+			font-size: 17px;
+		}
+		.viaje-portada img {
+			aspect-ratio: 4 / 3;
+		}
+		.viaje-portada:has(img) .viaje-titulo {
+			padding: 60px 18px 16px;
+		}
+		.viaje-resumen {
+			padding: 16px;
+		}
+		.viaje-consultar,
+		.boton-wa {
+			width: 100%;
+			text-align: center;
+		}
+		.itinerario li {
+			grid-template-columns: 1fr;
+			gap: 2px;
+		}
+	}
+</style>

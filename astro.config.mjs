@@ -2,16 +2,19 @@
 
 import mdx from '@astrojs/mdx';
 import node from '@astrojs/node';
-import sitemap from '@astrojs/sitemap';
+import preact from '@astrojs/preact';
 import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://parladiviaggi.com.ar',
-	// Las páginas públicas se generan como HTML estático (las sirve Caddy).
-	// Las rutas con `export const prerender = false` (admin y API, fase 2)
-	// corren en el servidor Node.
-	output: 'static',
+	// Todas las páginas se generan en el servidor en cada visita, así lo que se
+	// cambia en el panel admin se ve al instante. Caddy sirve directo los
+	// archivos estáticos (/_astro, /imgs, /media).
+	output: 'server',
 	adapter: node({ mode: 'standalone' }),
-	integrations: [mdx(), sitemap()],
+	integrations: [mdx(), preact()],
+	redirects: {
+		'/travel/viaje-1': '/travel/cruce-andino',
+	},
 });

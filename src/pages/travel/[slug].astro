@@ -1,0 +1,9 @@
+---
+import DetalleViaje from "../../components/DetalleViaje.astro";
+import { viajePorSlug } from "../../lib/viajes";
+
+const viaje = viajePorSlug(Astro.params.slug ?? "");
+if (!viaje) return new Response("No encontramos ese viaje", { status: 404 });
+---
+
+<DetalleViaje viaje={viaje} />

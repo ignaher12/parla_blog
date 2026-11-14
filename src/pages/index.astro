@@ -2,51 +2,26 @@
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
-import {
-	ASESORAS,
-	SITE_DESCRIPTION,
-	SITE_TITLE,
-	whatsappUrl,
-} from "../consts";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
-import { getCollection } from "astro:content";
-import { Image } from "astro:assets";
-import Layout from "../components/Layout.astro";
+import { SITE_DESCRIPTION, SITE_TITLE, whatsappUrl } from "../consts";
+import { asesorasActivas, getAjuste } from "../lib/ajustes";
+import { rangoFechas } from "../lib/formato";
+import { getMedia, mediaSrcset, mediaUrl } from "../lib/media";
+import { listarViajes } from "../lib/viajes";
 
-const travelPosts = (await getCollection("travel")).sort(
-	(a, b) => a.data.travelDate.valueOf() - b.data.travelDate.valueOf(),
-);
+const inicio = getAjuste("inicio");
+const asesoras = asesorasActivas();
+const heroImg = getMedia(inicio.hero_imagen);
+const mujeresImg = getMedia(inicio.mujeres_imagen);
 
-const images = import.meta.glob<{ default: ImageMetadata }>(
-	"/src/assets/**/*.{jpeg,jpg,png,gif}",
-);
-
-const resolveImage = async (imagePath: string | ImageMetadata | undefined) => {
-	if (!imagePath) return undefined;
-	if (typeof imagePath === "string") {
-		// Resolve relative paths (assuming they start with ../../assets/ or similar)
-		// We want to match /src/assets/...
-		const filename = imagePath.split("/").pop();
-		if (!filename) return undefined;
-
-		const matchingKey = Object.keys(images).find((key) =>
-			key.endsWith(filename),
-		);
-		if (matchingKey) {
-			const mod = await images[matchingKey]();
-			return mod.default;
-		}
-		return undefined;
-	}
-	return imagePath;
-};
-
-const processedTravelPosts = await Promise.all(
-	travelPosts.map(async (post) => {
-		const resolvedHero = await resolveImage(post.data.heroImage);
-		return { ...post, resolvedHero };
-	}),
-);
+// Destacados primero, después salidas grupales y paquetes, cada uno en su orden.
+const viajes = listarViajes({ soloPublicados: true })
+	.sort(
+		(a, b) =>
+			Number(b.destacado) - Number(a.destacado) ||
+			(a.tipo === b.tipo ? 0 : a.tipo === "grupal" ? -1 : 1),
+	)
+	.map((v) => ({ ...v, foto: getMedia(v.portada) }));
 ---
 
 <html lang="es-AR">
@@ -58,26 +33,31 @@ const processedTravelPosts = await Promise.all(
 		<WhatsAppButton />
 		<main>
 			<div class="hero-container">
-				<img
-					src="/imgs/bg-img.jpg"
-					alt="Parla di Viaggi"
-					class="hero-bg"
-				/>
+				{
+					heroImg ? (
+						<img
+							src={mediaUrl(heroImg.id, 1600)}
+							srcset={mediaSrcset(heroImg)}
+							sizes="100vw"
+							alt={heroImg.alt || inicio.hero_titulo}
+							class="hero-bg"
+							fetchpriority="high"
+						/>
+					) : (
+						<img
+							src="/imgs/bg-img.jpg"
+							alt="Parla di Viaggi"
+							class="hero-bg"
+							fetchpriority="high"
+						/>
+					)
+				}
 				<div class="hero-content">
-					<h1>Parla di Viaggi</h1>
-					<p class="subtitle">Agencia de viajes.</p>
+					<h1>{inicio.hero_titulo}</h1>
+					{inicio.hero_subtitulo && <p class="subtitle">{inicio.hero_subtitulo}</p>}
 					<div class="description">
-						<p>
-							Nos especializamos en acompañar a cada viajero desde
-							el primer contacto, ofreciendo asesoramiento
-							personalizado y una planificación cuidadosa en cada
-							etapa del viaje.
-						</p>
-						<p class="author">
-							Nuestro objetivo es simple: que disfrutes de tu
-							experiencia sin preocupaciones, sabiendo que cada
-							detalle fue pensado para vos.
-						</p>
+						{inicio.hero_texto && <p>{inicio.hero_texto}</p>}
+						{inicio.hero_texto2 && <p class="author">{inicio.hero_texto2}</p>}
 						<div class="hero-cta dropdown-container">
 							<button
 								id="ctaDropdownBtn"
@@ -90,7 +70,7 @@ const processedTravelPosts = await Promise.all(
 								class="dropdown-menu hidden"
 							>
 								{
-									ASESORAS.map((a) => (
+									asesoras.map((a) => (
 										<a
 											href={whatsappUrl(a.whatsapp)}
 											target="_blank"
@@ -127,19 +107,13 @@ const processedTravelPosts = await Promise.all(
 
 			<div class="intro-grid">
 				<div class="intro-text">
-					<h2>Viajes Especializados para Mujeres</h2>
-					<p class="intro-highlight">
-						Seguridad, compañia y disfrute
-					</p>
-					<p>
-						Uno de nuestros principales diferenciales es la
-						organización de viajes pensados especialmente para
-						mujeres. Diseñamos experiencias que priorizan la
-						seguridad, la comodidad, el acompañamiento y el
-						disfrute, creando itinerarios adaptados a los intereses
-						y necesidades de mujeres que desean viajar solas, con
-						amigas o en grupos afines.
-					</p>
+					<h2>{inicio.mujeres_titulo}</h2>
+					{
+						inicio.mujeres_destacado && (
+							<p class="intro-highlight">{inicio.mujeres_destacado}</p>
+						)
+					}
+					{inicio.mujeres_texto && <p>{inicio.mujeres_texto}</p>}
 					<div class="cta-container">
 						<a href="/travel" class="cta-button">Descubre Más</a>
 					</div>
@@ -149,19 +123,35 @@ const processedTravelPosts = await Promise.all(
 						class="placeholder-img"
 						style="background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666;"
 					>
-						<Image
-							src="/imgs/grupo.jpg"
-							alt="Grupo de mujeres"
-							width={400}
-							height={400}
-							class="trip-img"
-						/>
+						{
+							mujeresImg ? (
+								<img
+									src={mediaUrl(mujeresImg.id, 960)}
+									srcset={mediaSrcset(mujeresImg)}
+									sizes="(max-width: 720px) 100vw, 400px"
+									alt={mujeresImg.alt || inicio.mujeres_titulo}
+									width="400"
+									height="400"
+									class="trip-img"
+									loading="lazy"
+								/>
+							) : (
+								<img
+									src="/imgs/grupo.jpg"
+									alt="Grupo de mujeres"
+									width="400"
+									height="400"
+									class="trip-img"
+									loading="lazy"
+								/>
+							)
+						}
 					</div>
 				</div>
 			</div>
 
 			<div class="trips-section">
-				<h2 class="section-title">VIAJES GRUPALES</h2>
+				<h2 class="section-title">PRÓXIMOS VIAJES</h2>
 				<div class="divider"></div>
 
 				<div class="carousel-wrapper">
@@ -175,56 +165,42 @@ const processedTravelPosts = await Promise.all(
 					<div class="carousel-viewport" id="carouselViewport">
 						<div class="trips-carousel">
 							{
-								processedTravelPosts.map((post) => {
-									if (!post) return null;
-
-									const imageSrc = post.resolvedHero;
-
-									return (
-										<div class="trip-card">
-											<a
-												href={`/travel/${post.id}/`}
-												class="trip-link"
-											>
-												<div class="trip-img-container">
-													{imageSrc ? (
-														<Image
-															src={imageSrc}
-															alt={
-																post.data.title
-															}
-															width={400}
-															height={400}
-															class="trip-img"
-														/>
-													) : (
-														<div class="trip-img-placeholder">
-															Image
-														</div>
-													)}
-												</div>
-												<div class="trip-info">
-													<h3>{post.data.title}</h3>
-													<p class="trip-date">
-														{post.data.travelDate
-															? new Date(
-																	post.data
-																		.travelDate,
-																).toLocaleDateString(
-																	"es-AR",
-																	{
-																		year: "numeric",
-																		month: "long",
-																		day: "numeric",
-																	},
-																)
-															: ""}
-													</p>
-												</div>
-											</a>
-										</div>
-									);
-								})
+								viajes.map((v) => (
+									<div class="trip-card">
+										<a
+											href={`/travel/${v.slug}/`}
+											class="trip-link"
+										>
+											<div class="trip-img-container">
+												{v.foto ? (
+													<img
+														src={mediaUrl(v.foto.id, 480)}
+														srcset={mediaSrcset(v.foto)}
+														sizes="400px"
+														alt={v.foto.alt || v.titulo}
+														width="400"
+														height="400"
+														class="trip-img"
+														loading="lazy"
+													/>
+												) : (
+													<div class="trip-img-placeholder">
+														{v.titulo}
+													</div>
+												)}
+											</div>
+											<div class="trip-info">
+												<h3>{v.titulo}</h3>
+												<p class="trip-date">
+													{rangoFechas(
+														v.fecha_salida,
+														v.fecha_regreso,
+													) || v.destino}
+												</p>
+											</div>
+										</a>
+									</div>
+								))
 							}
 						</div>
 					</div>

@@ -1,28 +1,18 @@
-import { getCollection } from 'astro:content';
 import rss from '@astrojs/rss';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { rangoFechas } from '../lib/formato';
+import { listarViajes } from '../lib/viajes';
 
-export async function GET(context) {
-	const posts = await getCollection('post');
-	const travels = await getCollection('travel');
-
-	const items = [
-		...posts.map((post) => ({
-			...post.data,
-			link: `/past-travels/${post.id}/`,
-		})),
-		...travels.map((post) => ({
-			...post.data,
-			pubDate: post.data.travelDate,
-			link: `/travel/${post.id}/`,
-		})),
-	];
-
+export function GET(context) {
 	return rss({
 		title: SITE_TITLE,
 		description: SITE_DESCRIPTION,
 		site: context.site,
-		items: items,
-		heroImage: "public/imgs/logo.png",
+		items: listarViajes({ soloPublicados: true }).map((v) => ({
+			title: v.titulo,
+			description: [v.resumen, rangoFechas(v.fecha_salida, v.fecha_regreso)].filter(Boolean).join(' · '),
+			pubDate: new Date(`${v.creado.replace(' ', 'T')}Z`),
+			link: `/travel/${v.slug}/`,
+		})),
 	});
 }

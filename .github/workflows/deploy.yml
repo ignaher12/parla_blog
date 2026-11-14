@@ -31,7 +31,7 @@ jobs:
       - name: Empaquetar (sin dependencias de desarrollo)
         run: |
           npm prune --omit=dev
-          tar -czf parla-release.tgz dist node_modules package.json
+          tar -czf parla-release.tgz dist node_modules package.json seed
 
       - name: Configurar SSH
         run: |
