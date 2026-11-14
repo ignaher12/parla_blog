@@ -1,0 +1,7 @@
+[Unit]
+Description=Backup diario de Parla di Viaggi
+
+[Service]
+Type=oneshot
+User=parla
+ExecStart=/var/www/parladiviaggi/backup.sh

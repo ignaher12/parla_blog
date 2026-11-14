@@ -1,0 +1,10 @@
+[Unit]
+Description=Backup diario de Parla di Viaggi (4 AM)
+
+[Timer]
+OnCalendar=*-*-* 04:00:00
+RandomizedDelaySec=20min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
